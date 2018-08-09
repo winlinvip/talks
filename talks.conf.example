@@ -1,0 +1,12 @@
+{
+    "listen": ":1986",
+    "html": "html",
+    "rtc": {
+        "access_key_id":"OGAEkdiL62AkwSgs",
+        "access_key_secret":"4JaIs4SG4dLwPsQSwGAHzeOQKxO6iw",
+        "region_endpoint":"rtc.aliyuncs.com",
+        "region":"cn-shanghai",
+        "gslb":"https://rgslb.rtc.aliyuncs.com",
+        "appid":"iwo5l81k"
+    }
+}
