@@ -129,14 +129,11 @@ scApp.filter("tc_filter_http", function(){
 
 scApp.filter("tc_filter_status", function(){
     return function(control) {
-        if (!control || !control.nonce || !control.code) {
-            if (control.code) {
-                return statusMap[control.code];
-            }
+        if (!control || !control.code) {
             return '';
         }
 
-        if (control.nonce.indexOf('RCV-') == 0) {
+        if (control.nonce && control.nonce.indexOf('RCV-') == 0) {
             return 'Warning: Recovered from OpenAPI error';
         } else {
 	        return statusMap[control.code];
