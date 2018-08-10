@@ -113,11 +113,11 @@ scApp.controller("CRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav", 
 
 scApp.filter("tc_filter_http", function(){
     return function(control) {
-        if (!control || !control.nonce || !control.code) {
+        if (!control || !control.code) {
             return 'muted';
         }
 
-        if (control.nonce.indexOf('RCV-') == 0) {
+        if (control.nonce && control.nonce.indexOf('RCV-') == 0) {
             return 'text-warning';
         } else if (control.code == 200) {
             return 'text-success';
