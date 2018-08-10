@@ -130,6 +130,9 @@ scApp.filter("tc_filter_http", function(){
 scApp.filter("tc_filter_status", function(){
     return function(control) {
         if (!control || !control.nonce || !control.code) {
+            if (control.code) {
+                return statusMap[control.code];
+            }
             return '';
         }
 

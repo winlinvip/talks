@@ -179,6 +179,14 @@ scApp.factory('MHttpInterceptor', ["$q", "$sc_utility", function($q, $sc_utility
             return response || $q.when(response);
         },
         'responseError': function(rejection) {
+            // When CORS and 404, we may get status 0.
+            if (rejection.status == 0) {
+                rejection.status = 404;
+                if (!rejection.data) {
+                    rejection.data = 'FixByMe: CORS NotFound.';
+                }
+            }
+
             $sc_utility.http_error(rejection.status, rejection.data);
             return $q.reject(rejection);
         }
