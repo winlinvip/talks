@@ -73,7 +73,7 @@ scApp.controller("CRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav", 
 		$scope.control.state = 1;
 
 		var url = $scope.input.server + '?room=' + $scope.input.room
-			+ '&user=' + $scope.input.user + '&password=' + $scope.input.password;
+			+ '&user=' + $scope.input.user + '&passwd=' + $scope.input.password;
 		$scope.control.url = url;
 		$scope.control.starttime = new Date();
 
