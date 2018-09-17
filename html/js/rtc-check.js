@@ -1,4 +1,13 @@
 
+scApp.controller("CWebRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav", "MRTCCheck", function($scope, $location, $sc_utility, $sc_nav, MRTCCheck){
+	setTimeout(function(){
+		//window.location.href = 'webrtc_check.html';
+	}, 1000)
+
+	//$location.url("webrtc_check.html");
+    $sc_nav.in_webrtc_check();
+}]);
+
 scApp.controller("CRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav", "MRTCCheck", function($scope, $location, $sc_utility, $sc_nav, MRTCCheck){
 	$scope.db = {
 		appid:null, gslb:null, nonce:null, session:null, timestamp:null,

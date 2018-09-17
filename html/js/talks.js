@@ -5,6 +5,7 @@ var scApp = angular.module("scApp", ["ngRoute", "ngResource",
 scApp.config(["$routeProvider", function($routeProvider){
     $routeProvider.otherwise({redirectTo:"/rtc-check"})
         .when("/rtc-check", {templateUrl:"views/rtc-check.html", controller:"CRTCCheck"})
+        .when("/webrtc-check", {templateUrl:"views/webrtc-check.html", controller:"CWebRTCCheck"})
 }]);
 
 scApp.controller("CSCMain", ["$scope", "$interval", "$location", "$sc_utility", function($scope, $interval, $location, $sc_utility){
@@ -56,6 +57,9 @@ scApp.controller("CSCMain", ["$scope", "$interval", "$location", "$sc_utility", 
     $scope.go_rtc_check = function() {
         $location.path("/rtc-check");
     };
+    $scope.go_webrtc_check = function() {
+        $location.path("/webrtc-check");
+    };
 }]);
 
 scApp.filter("sc_filter_log_level", function(){
@@ -77,6 +81,9 @@ scApp.provider("$sc_nav", function(){
             selected: null,
             in_rtc_check: function(){
                 this.selected = "/rtc-check";
+            },
+            in_webrtc_check: function(){
+                this.selected = "/webrtc-check";
             },
             is_selected: function(v){
                 return v == this.selected;
