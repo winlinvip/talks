@@ -124,6 +124,51 @@ func run(ctx context.Context) error {
 		fs.ServeHTTP(w, r)
 	})
 
+	pattern = "/talks/v1/collect"
+	ol.Tf(ctx, "Handle %v", pattern)
+	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
+		oh.SetHeader(w)
+		w.Header().Set("Content-Type", "image/gif")
+		w.Write([]byte{
+			0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00, 0x80, 0xff, 0x00, 0xff, 0xff, 0xff,
+			0x00, 0x00, 0x00, 0x2c, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x02, 0x02, 0x44,
+			0x01, 0x00, 0x3b,
+		})
+	})
+
+	pattern = "/talks/v1/v1alpha/iceconfig"
+	ol.Tf(ctx, "Handle %v", pattern)
+	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
+		oh.SetHeader(w)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(
+`{
+	"lifetimeDuration": "86400s",
+	"iceServers": [
+		{
+			"urls": [
+				"stun:173.194.199.127:19302",
+				"stun:[2607:f8b0:4003:c0c::7f]:19302"
+			]
+		},
+		{
+			"urls": [
+				"turn:64.233.169.127:19305?transport=udp",
+				"turn:[2607:f8b0:4003:c08::7f]:19305?transport=udp",
+				"turn:64.233.169.127:19305?transport=tcp",
+				"turn:[2607:f8b0:4003:c08::7f]:19305?transport=tcp"
+			],
+			"username": "CIPDgd0FEgb1etlNQ8QYqvGggqMKIICjBQ",
+			"credential": "EUM/Cz+vcwPw8WgDqVDiboREIGY=",
+			"maxRateKbps": "8000"
+		}
+	],
+	"blockStatus": "NOT_BLOCKED",
+	"iceTransportPolicy": "all"
+}`,
+		))
+	})
+
 	if err := http.ListenAndServe(c.Listen, nil); err != nil {
 		return oe.Wrapf(err, "serve")
 	}
