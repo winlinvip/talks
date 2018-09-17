@@ -136,7 +136,7 @@ func run(ctx context.Context) error {
 		})
 	})
 
-	pattern = "/talks/v1/v1alpha/iceconfig"
+	pattern = "/talks/v1/iceconfig"
 	ol.Tf(ctx, "Handle %v", pattern)
 	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 		oh.SetHeader(w)
