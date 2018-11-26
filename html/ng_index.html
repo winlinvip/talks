@@ -18,7 +18,10 @@
                 <a class="brand" href="javascript:void(0)">Talks</a>
                 <ul class="nav">
                     <li class="{{'/rtc-check'| sc_filter_nav_active}}">
-                        <a href="javascript:void(0)" ng-click="go_rtc_check()">Prepare</a>
+                        <a href="javascript:void(0)" ng-click="go_rtc_check()">VerifyApp</a>
+                    </li>
+                    <li class="{{'/token-check'| sc_filter_nav_active}}">
+                        <a href="javascript:void(0)" ng-click="go_token_check()">VerifyToken</a>
                     </li>
                     <li class="{{'/webrtc-check'| sc_filter_nav_active}}">
                         <a href="javascript:void(0)" ng-click="go_webrtc_check()">Check</a>
@@ -47,5 +50,6 @@
     <script type="text/javascript" src="js/bravo_popover/popover.js"></script>
     <script type="text/javascript" src="js/talks.js"></script>
     <script type="text/javascript" src="js/rtc-check.js"></script>
+    <script type="text/javascript" src="js/sjcl.js"></script>
 </body>
 </html>

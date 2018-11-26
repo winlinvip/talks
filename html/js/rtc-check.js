@@ -6,7 +6,103 @@ scApp.controller("CWebRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav
 
 	//$location.url("webrtc_check.html");
     $sc_nav.in_webrtc_check();
+    $sc_utility.refresh.stop();
 }]);
+
+scApp.controller("CRTCToken", ["$scope", "$location", "$sc_utility", "$sc_nav", "MRTCCheck", function($scope, $location, $sc_utility, $sc_nav, MRTCCheck){
+	$scope.input = {
+		appid:null, channelID:null, channelKey:null,
+		userid:null, nonce:null, timestamp:null,
+		token:null
+	};
+
+	$scope.control = {
+		show:false, expect:null, actual:null
+	};
+
+	$scope.checkToken = function() {
+		$scope.control.state = 0;
+
+		if (!$scope.input.appid) {
+			$sc_utility.log('error', "Please input AppID");
+			return;
+		}
+		if (!$scope.input.channelID) {
+			$sc_utility.log('error', "Please input ChannelID");
+			return;
+		}
+		if (!$scope.input.channelKey) {
+			$sc_utility.log('error', "Please input ChannelKey");
+			return;
+		}
+		if (!$scope.input.userid) {
+			$sc_utility.log('error', "Please input UserID");
+			return;
+		}
+		if (!$scope.input.nonce) {
+			$sc_utility.log('error', "Please input Nonce");
+			return;
+		}
+		if (!$scope.input.timestamp) {
+			$sc_utility.log('error', "Please input Timestamp");
+			return;
+		}
+		if (!$scope.input.token) {
+			$sc_utility.log('error', "Please input Token");
+			return;
+		}
+
+		var h = new sjcl.hash.sha256();
+		h.update($scope.input.channelID);
+		h.update($scope.input.channelKey);
+		h.update($scope.input.appid);
+		h.update($scope.input.userid);
+		//h.update("b8f32fc4e29cf519978cc222c160089f"); // without session
+		h.update($scope.input.nonce);
+		h.update($scope.input.timestamp);
+		$scope.control.actual = $scope.input.token;
+		$scope.control.expect = sjcl.codec.hex.fromBits(h.finalize());
+		$scope.control.show = true;
+	};
+
+	if ($location.search().appid) {
+		$scope.input.appid = $location.search().appid;
+	}
+	if ($location.search().channel) {
+		$scope.input.channelID = $location.search().channel;
+	}
+	if ($location.search().room) {
+		$scope.input.channelID = $location.search().room;
+	}
+	if ($location.search().channelKey) {
+		$scope.input.channelKey = $location.search().channelKey;
+	}
+	if ($location.search().userid) {
+		$scope.input.userid = $location.search().userid;
+	}
+	if ($location.search().nonce) {
+		$scope.input.nonce = $location.search().nonce;
+	}
+	if ($location.search().timestamp) {
+		$scope.input.timestamp = $location.search().timestamp;
+	}
+	if ($location.search().token) {
+		$scope.input.token = $location.search().token;
+	}
+
+    $sc_nav.in_token_check();
+    $sc_utility.refresh.stop();
+}]);
+
+scApp.filter("tc_filter_token", function(){
+    return function(control) {
+        if (!control) {
+            return 'muted';
+        }
+
+        return control.actual == control.expect ? 'text-success' : 'text-error';
+    };
+});
 
 scApp.controller("CRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav", "MRTCCheck", function($scope, $location, $sc_utility, $sc_nav, MRTCCheck){
 	$scope.db = {
@@ -108,6 +204,9 @@ scApp.controller("CRTCCheck", ["$scope", "$location", "$sc_utility", "$sc_nav", 
 
 	if ($location.search().room) {
 		$scope.input.room = $location.search().room;
+	}
+	if ($location.search().channel) {
+		$scope.input.room = $location.search().channel;
 	}
 	if ($location.search().user) {
 		$scope.input.user = $location.search().user;
