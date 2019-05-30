@@ -52,6 +52,11 @@ scApp.controller("CRTCToken", ["$scope", "$location", "$sc_utility", "$sc_nav", 
 			return;
 		}
 
+		if ($scope.input.channelKey.length < 32) {
+			$sc_utility.log('error', "Invalid ChannelKey length, should >=32 bytes.");
+			return;
+		}
+
 		var h = new sjcl.hash.sha256();
 		h.update($scope.input.channelID);
 		h.update($scope.input.channelKey);
